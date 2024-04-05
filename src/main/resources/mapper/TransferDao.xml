@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.back.dao.TransferDao">
+
+    <resultMap type="com.back.entity.Transfer" id="TransferMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="type" column="type" jdbcType="VARCHAR"/>
+        <result property="inventoryid" column="inventoryid" jdbcType="VARCHAR"/>
+        <result property="branddept" column="branddept" jdbcType="VARCHAR"/>
+        <result property="olduser" column="olduser" jdbcType="VARCHAR"/>
+        <result property="olduserphone" column="olduserphone" jdbcType="VARCHAR"/>
+        <result property="oldcarnumber" column="oldcarnumber" jdbcType="VARCHAR"/>
+        <result property="newuser" column="newuser" jdbcType="VARCHAR"/>
+        <result property="newuserphone" column="newuserphone" jdbcType="VARCHAR"/>
+        <result property="newcarnumber" column="newcarnumber" jdbcType="VARCHAR"/>
+        <result property="transfertype" column="transfertype" jdbcType="VARCHAR"/>
+        <result property="transferarea" column="transferarea" jdbcType="VARCHAR"/>
+        <result property="submittime" column="submittime" jdbcType="TIMESTAMP"/>
+        <result property="finishtime" column="finishtime" jdbcType="TIMESTAMP"/>
+        <result property="transferstate" column="transferstate" jdbcType="VARCHAR"/>
+        <result property="isurgent" column="isurgent" jdbcType="VARCHAR"/>
+        <result property="appraiseraccount" column="appraiseraccount" jdbcType="VARCHAR"/>
+        <result property="transfercommissioner" column="transfercommissioner" jdbcType="VARCHAR"/>
+        <result property="materials" column="materials" jdbcType="VARCHAR"/>
+        <result property="carkeys" column="carkeys" jdbcType="INTEGER"/>
+        <result property="remarks" column="remarks" jdbcType="VARCHAR"/>
+        <result property="carexamination" column="carexamination" jdbcType="VARCHAR"/>
+        <result property="licenseplate" column="licenseplate" jdbcType="VARCHAR"/>
+        <result property="showcards" column="showcards" jdbcType="VARCHAR"/>
+        <result property="violationhandling" column="violationhandling" jdbcType="VARCHAR"/>
+        <result property="dataprocessing" column="dataprocessing" jdbcType="VARCHAR"/>
+        <result property="version" column="version" jdbcType="INTEGER"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+        <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
+        <result property="gmtModified" column="gmt_modified" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into hello.transfer(type, inventoryid, branddept, olduser, olduserphone, oldcarnumber, newuser, newuserphone, newcarnumber, transfertype, transferarea, submittime, finishtime, transferstate, isurgent, appraiseraccount, transfercommissioner, materials, carkeys, remarks, carexamination, licenseplate, showcards, violationhandling, dataprocessing, version, deleted, gmt_create, gmt_modified)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.type}, #{entity.inventoryid}, #{entity.branddept}, #{entity.olduser}, #{entity.olduserphone}, #{entity.oldcarnumber}, #{entity.newuser}, #{entity.newuserphone}, #{entity.newcarnumber}, #{entity.transfertype}, #{entity.transferarea}, #{entity.submittime}, #{entity.finishtime}, #{entity.transferstate}, #{entity.isurgent}, #{entity.appraiseraccount}, #{entity.transfercommissioner}, #{entity.materials}, #{entity.carkeys}, #{entity.remarks}, #{entity.carexamination}, #{entity.licenseplate}, #{entity.showcards}, #{entity.violationhandling}, #{entity.dataprocessing}, #{entity.version}, #{entity.deleted}, #{entity.gmtCreate}, #{entity.gmtModified})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into hello.transfer(type, inventoryid, branddept, olduser, olduserphone, oldcarnumber, newuser, newuserphone, newcarnumber, transfertype, transferarea, submittime, finishtime, transferstate, isurgent, appraiseraccount, transfercommissioner, materials, carkeys, remarks, carexamination, licenseplate, showcards, violationhandling, dataprocessing, version, deleted, gmt_create, gmt_modified)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.type}, #{entity.inventoryid}, #{entity.branddept}, #{entity.olduser}, #{entity.olduserphone}, #{entity.oldcarnumber}, #{entity.newuser}, #{entity.newuserphone}, #{entity.newcarnumber}, #{entity.transfertype}, #{entity.transferarea}, #{entity.submittime}, #{entity.finishtime}, #{entity.transferstate}, #{entity.isurgent}, #{entity.appraiseraccount}, #{entity.transfercommissioner}, #{entity.materials}, #{entity.carkeys}, #{entity.remarks}, #{entity.carexamination}, #{entity.licenseplate}, #{entity.showcards}, #{entity.violationhandling}, #{entity.dataprocessing}, #{entity.version}, #{entity.deleted}, #{entity.gmtCreate}, #{entity.gmtModified})
+        </foreach>
+        on duplicate key update
+         type = values(type) , inventoryid = values(inventoryid) , branddept = values(branddept) , olduser = values(olduser) , olduserphone = values(olduserphone) , oldcarnumber = values(oldcarnumber) , newuser = values(newuser) , newuserphone = values(newuserphone) , newcarnumber = values(newcarnumber) , transfertype = values(transfertype) , transferarea = values(transferarea) , submittime = values(submittime) , finishtime = values(finishtime) , transferstate = values(transferstate) , isurgent = values(isurgent) , appraiseraccount = values(appraiseraccount) , transfercommissioner = values(transfercommissioner) , materials = values(materials) , carkeys = values(carkeys) , remarks = values(remarks) , carexamination = values(carexamination) , licenseplate = values(licenseplate) , showcards = values(showcards) , violationhandling = values(violationhandling) , dataprocessing = values(dataprocessing) , version = values(version) , deleted = values(deleted) , gmt_create = values(gmt_create) , gmt_modified = values(gmt_modified)     </insert>
+
+</mapper>
+

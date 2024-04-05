@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.back.dao.IncidentalsDao">
+
+    <resultMap type="com.back.entity.Incidentals" id="IncidentalsMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="inventoryid" column="inventoryid" jdbcType="VARCHAR"/>
+        <result property="branddept" column="branddept" jdbcType="VARCHAR"/>
+        <result property="personinchargeaccount" column="personinchargeaccount" jdbcType="VARCHAR"/>
+        <result property="rows" column="rows" jdbcType="INTEGER"/>
+        <result property="costitems" column="costitems" jdbcType="VARCHAR"/>
+        <result property="amounts" column="amounts" jdbcType="NUMERIC"/>
+        <result property="types" column="types" jdbcType="VARCHAR"/>
+        <result property="remarks" column="remarks" jdbcType="VARCHAR"/>
+        <result property="dates" column="dates" jdbcType="TIMESTAMP"/>
+        <result property="version" column="version" jdbcType="INTEGER"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+        <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
+        <result property="gmtModified" column="gmt_modified" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into hello.incidentals(inventoryid, branddept, personinchargeaccount, rows, costitems, amounts, types, remarks, dates, version, deleted, gmt_create, gmt_modified)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.inventoryid}, #{entity.branddept}, #{entity.personinchargeaccount}, #{entity.rows}, #{entity.costitems}, #{entity.amounts}, #{entity.types}, #{entity.remarks}, #{entity.dates}, #{entity.version}, #{entity.deleted}, #{entity.gmtCreate}, #{entity.gmtModified})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into hello.incidentals(inventoryid, branddept, personinchargeaccount, rows, costitems, amounts, types, remarks, dates, version, deleted, gmt_create, gmt_modified)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.inventoryid}, #{entity.branddept}, #{entity.personinchargeaccount}, #{entity.rows}, #{entity.costitems}, #{entity.amounts}, #{entity.types}, #{entity.remarks}, #{entity.dates}, #{entity.version}, #{entity.deleted}, #{entity.gmtCreate}, #{entity.gmtModified})
+        </foreach>
+        on duplicate key update
+         inventoryid = values(inventoryid) , branddept = values(branddept) , personinchargeaccount = values(personinchargeaccount) , rows = values(rows) , costitems = values(costitems) , amounts = values(amounts) , types = values(types) , remarks = values(remarks) , dates = values(dates) , version = values(version) , deleted = values(deleted) , gmt_create = values(gmt_create) , gmt_modified = values(gmt_modified)     </insert>
+
+    <select id="getTotal1ByInventoryid" parameterType="String" resultType="Double">
+        SELECT SUM(amounts) FROM hello.incidentals where inventoryid=#{inventoryid} and types='-支出' and deleted=0
+    </select>
+    <select id="getTotal2ByInventoryid" parameterType="String" resultType="Double">
+        SELECT SUM(amounts) FROM hello.incidentals where inventoryid=#{inventoryid} and types='+收入' and deleted=0
+    </select>
+
+    <select id="getTotal1" resultType="Double">
+        SELECT SUM(amounts) FROM hello.incidentals where  types='-支出' and deleted=0
+    </select>
+    <select id="getTotal2" resultType="Double">
+        SELECT SUM(amounts) FROM hello.incidentals where  types='+收入' and deleted=0
+    </select>
+
+</mapper>
+

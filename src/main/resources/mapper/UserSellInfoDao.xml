@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.back.dao.UserSellInfoDao">
+
+    <resultMap type="com.back.entity.UserSellInfo" id="UserSellInfoMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="carinfo" column="carinfo" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="version" column="version" jdbcType="INTEGER"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+        <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
+        <result property="gmtModified" column="gmt_modified" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into hello.user_sell_info(carinfo, phone, version, deleted, gmt_create, gmt_modified)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.carinfo}, #{entity.phone}, #{entity.version}, #{entity.deleted}, #{entity.gmtCreate}, #{entity.gmtModified})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into hello.user_sell_info(carinfo, phone, version, deleted, gmt_create, gmt_modified)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.carinfo}, #{entity.phone}, #{entity.version}, #{entity.deleted}, #{entity.gmtCreate}, #{entity.gmtModified})
+        </foreach>
+        on duplicate key update
+         carinfo = values(carinfo) , phone = values(phone) , version = values(version) , deleted = values(deleted) , gmt_create = values(gmt_create) , gmt_modified = values(gmt_modified)     </insert>
+
+    <select id="getDeleteUserInfo" resultType="com.back.entity.UserSellInfo">
+        select * from hello.user_sell_info where deleted=1
+    </select>
+
+    <delete id="deleteReallyById" parameterType="Integer">
+        delete from hello.user_sell_info where id=#{id}
+    </delete>
+
+</mapper>
+

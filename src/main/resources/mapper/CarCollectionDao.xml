@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.back.dao.CarCollectionDao">
+
+    <resultMap type="com.back.entity.CarCollection" id="CarCollectionMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="selloutid" column="selloutid" jdbcType="INTEGER"/>
+        <result property="inventoryid" column="inventoryid" jdbcType="VARCHAR"/>
+        <result property="branddept" column="branddept" jdbcType="VARCHAR"/>
+        <result property="mustcollection" column="mustcollection" jdbcType="NUMERIC"/>
+        <result property="hadcollection" column="hadcollection" jdbcType="NUMERIC"/>
+        <result property="leftcollection" column="leftcollection" jdbcType="NUMERIC"/>
+        <result property="nowcollection" column="nowcollection" jdbcType="NUMERIC"/>
+        <result property="collectionproject" column="collectionproject" jdbcType="VARCHAR"/>
+        <result property="collectiondate" column="collectiondate" jdbcType="TIMESTAMP"/>
+        <result property="personinchargeaccount" column="personinchargeaccount" jdbcType="VARCHAR"/>
+        <result property="collectiontext" column="collectiontext" jdbcType="VARCHAR"/>
+        <result property="version" column="version" jdbcType="INTEGER"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+        <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
+        <result property="gmtModified" column="gmt_modified" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into hello.car_collection(selloutid, inventoryid, branddept, mustcollection, hadcollection, leftcollection, nowcollection, collectionproject, collectiondate, personinchargeaccount, collectiontext, version, deleted, gmt_create, gmt_modified)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.selloutid}, #{entity.inventoryid}, #{entity.branddept}, #{entity.mustcollection}, #{entity.hadcollection}, #{entity.leftcollection}, #{entity.nowcollection}, #{entity.collectionproject}, #{entity.collectiondate}, #{entity.personinchargeaccount}, #{entity.collectiontext}, #{entity.version}, #{entity.deleted}, #{entity.gmtCreate}, #{entity.gmtModified})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into hello.car_collection(selloutid, inventoryid, branddept, mustcollection, hadcollection, leftcollection, nowcollection, collectionproject, collectiondate, personinchargeaccount, collectiontext, version, deleted, gmt_create, gmt_modified)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.selloutid}, #{entity.inventoryid}, #{entity.branddept}, #{entity.mustcollection}, #{entity.hadcollection}, #{entity.leftcollection}, #{entity.nowcollection}, #{entity.collectionproject}, #{entity.collectiondate}, #{entity.personinchargeaccount}, #{entity.collectiontext}, #{entity.version}, #{entity.deleted}, #{entity.gmtCreate}, #{entity.gmtModified})
+        </foreach>
+        on duplicate key update
+         selloutid = values(selloutid) , inventoryid = values(inventoryid) , branddept = values(branddept) , mustcollection = values(mustcollection) , hadcollection = values(hadcollection) , leftcollection = values(leftcollection) , nowcollection = values(nowcollection) , collectionproject = values(collectionproject) , collectiondate = values(collectiondate) , personinchargeaccount = values(personinchargeaccount) , collectiontext = values(collectiontext) , version = values(version) , deleted = values(deleted) , gmt_create = values(gmt_create) , gmt_modified = values(gmt_modified)     </insert>
+
+    <select id="getInventoryids" resultType="String">
+        select distinct inventoryid from hello.car_collection
+    </select>
+
+</mapper>
+

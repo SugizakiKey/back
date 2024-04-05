@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.back.dao.SelloutDao">
+
+    <resultMap type="com.back.entity.Sellout" id="SelloutMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="inventoryid" column="inventoryid" jdbcType="VARCHAR"/>
+        <result property="branddept" column="branddept" jdbcType="VARCHAR"/>
+        <result property="outtype" column="outtype" jdbcType="VARCHAR"/>
+        <result property="bargaindate" column="bargaindate" jdbcType="TIMESTAMP"/>
+        <result property="operationadminaccount" column="operationadminaccount" jdbcType="VARCHAR"/>
+        <result property="acquisitiondate" column="acquisitiondate" jdbcType="TIMESTAMP"/>
+        <result property="showroomprice" column="showroomprice" jdbcType="NUMERIC"/>
+        <result property="sellminprice" column="sellminprice" jdbcType="NUMERIC"/>
+        <result property="managerminprice" column="managerminprice" jdbcType="NUMERIC"/>
+        <result property="bargainprice" column="bargainprice" jdbcType="NUMERIC"/>
+        <result property="selltype" column="selltype" jdbcType="VARCHAR"/>
+        <result property="isinfull" column="isinfull" jdbcType="VARCHAR"/>
+        <result property="mortgagecycle" column="mortgagecycle" jdbcType="INTEGER"/>
+        <result property="downpaymentratio" column="downpaymentratio" jdbcType="NUMERIC"/>
+        <result property="lendingrate" column="lendingrate" jdbcType="NUMERIC"/>
+        <result property="lendingprice" column="lendingprice" jdbcType="NUMERIC"/>
+        <result property="totalrepaymentprice" column="totalrepaymentprice" jdbcType="NUMERIC"/>
+        <result property="monthrepayprice" column="monthrepayprice" jdbcType="NUMERIC"/>
+        <result property="servicechargeratio" column="servicechargeratio" jdbcType="NUMERIC"/>
+        <result property="servicechargeprice" column="servicechargeprice" jdbcType="NUMERIC"/>
+        <result property="returnpointratio" column="returnpointratio" jdbcType="NUMERIC"/>
+        <result property="returnpointprice" column="returnpointprice" jdbcType="NUMERIC"/>
+        <result property="startdate" column="startdate" jdbcType="TIMESTAMP"/>
+        <result property="enddate" column="enddate" jdbcType="TIMESTAMP"/>
+        <result property="deposit" column="deposit" jdbcType="NUMERIC"/>
+        <result property="balance" column="balance" jdbcType="NUMERIC"/>
+        <result property="commission" column="commission" jdbcType="NUMERIC"/>
+        <result property="otherexpenses" column="otherexpenses" jdbcType="NUMERIC"/>
+        <result property="bargainuseraccount" column="bargainuseraccount" jdbcType="VARCHAR"/>
+        <result property="userfrom" column="userfrom" jdbcType="VARCHAR"/>
+        <result property="buyuserphone" column="buyuserphone" jdbcType="VARCHAR"/>
+        <result property="buyuseridcard" column="buyuseridcard" jdbcType="VARCHAR"/>
+        <result property="isinsurance" column="isinsurance" jdbcType="INTEGER"/>
+        <result property="outremarks" column="outremarks" jdbcType="VARCHAR"/>
+        <result property="mustcollection" column="mustcollection" jdbcType="NUMERIC"/>
+        <result property="hadcollection" column="hadcollection" jdbcType="NUMERIC"/>
+        <result property="leftcollection" column="leftcollection" jdbcType="NUMERIC"/>
+        <result property="nowcollection" column="nowcollection" jdbcType="NUMERIC"/>
+        <result property="personinchargeaccount" column="personinchargeaccount" jdbcType="VARCHAR"/>
+        <result property="collectiontext" column="collectiontext" jdbcType="VARCHAR"/>
+        <result property="version" column="version" jdbcType="INTEGER"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+        <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
+        <result property="gmtModified" column="gmt_modified" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into hello.sellout(inventoryid, branddept, outtype, bargaindate, operationadminaccount, acquisitiondate, showroomprice, sellminprice, managerminprice, bargainprice, selltype, isinfull, mortgagecycle, downpaymentratio, lendingrate, lendingprice, totalrepaymentprice, monthrepayprice, servicechargeratio, servicechargeprice, returnpointratio, returnpointprice, startdate, enddate, deposit, balance, commission, otherexpenses, bargainuseraccount, userfrom, buyuserphone, buyuseridcard, isinsurance, outremarks, mustcollection, hadcollection, leftcollection, nowcollection, personinchargeaccount, collectiontext, version, deleted, gmt_create, gmt_modified)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.inventoryid}, #{entity.branddept}, #{entity.outtype}, #{entity.bargaindate}, #{entity.operationadminaccount}, #{entity.acquisitiondate}, #{entity.showroomprice}, #{entity.sellminprice}, #{entity.managerminprice}, #{entity.bargainprice}, #{entity.selltype}, #{entity.isinfull}, #{entity.mortgagecycle}, #{entity.downpaymentratio}, #{entity.lendingrate}, #{entity.lendingprice}, #{entity.totalrepaymentprice}, #{entity.monthrepayprice}, #{entity.servicechargeratio}, #{entity.servicechargeprice}, #{entity.returnpointratio}, #{entity.returnpointprice}, #{entity.startdate}, #{entity.enddate}, #{entity.deposit}, #{entity.balance}, #{entity.commission}, #{entity.otherexpenses}, #{entity.bargainuseraccount}, #{entity.userfrom}, #{entity.buyuserphone}, #{entity.buyuseridcard}, #{entity.isinsurance}, #{entity.outremarks}, #{entity.mustcollection}, #{entity.hadcollection}, #{entity.leftcollection}, #{entity.nowcollection}, #{entity.personinchargeaccount}, #{entity.collectiontext}, #{entity.version}, #{entity.deleted}, #{entity.gmtCreate}, #{entity.gmtModified})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into hello.sellout(inventoryid, branddept, outtype, bargaindate, operationadminaccount, acquisitiondate, showroomprice, sellminprice, managerminprice, bargainprice, selltype, isinfull, mortgagecycle, downpaymentratio, lendingrate, lendingprice, totalrepaymentprice, monthrepayprice, servicechargeratio, servicechargeprice, returnpointratio, returnpointprice, startdate, enddate, deposit, balance, commission, otherexpenses, bargainuseraccount, userfrom, buyuserphone, buyuseridcard, isinsurance, outremarks, mustcollection, hadcollection, leftcollection, nowcollection, personinchargeaccount, collectiontext, version, deleted, gmt_create, gmt_modified)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.inventoryid}, #{entity.branddept}, #{entity.outtype}, #{entity.bargaindate}, #{entity.operationadminaccount}, #{entity.acquisitiondate}, #{entity.showroomprice}, #{entity.sellminprice}, #{entity.managerminprice}, #{entity.bargainprice}, #{entity.selltype}, #{entity.isinfull}, #{entity.mortgagecycle}, #{entity.downpaymentratio}, #{entity.lendingrate}, #{entity.lendingprice}, #{entity.totalrepaymentprice}, #{entity.monthrepayprice}, #{entity.servicechargeratio}, #{entity.servicechargeprice}, #{entity.returnpointratio}, #{entity.returnpointprice}, #{entity.startdate}, #{entity.enddate}, #{entity.deposit}, #{entity.balance}, #{entity.commission}, #{entity.otherexpenses}, #{entity.bargainuseraccount}, #{entity.userfrom}, #{entity.buyuserphone}, #{entity.buyuseridcard}, #{entity.isinsurance}, #{entity.outremarks}, #{entity.mustcollection}, #{entity.hadcollection}, #{entity.leftcollection}, #{entity.nowcollection}, #{entity.personinchargeaccount}, #{entity.collectiontext}, #{entity.version}, #{entity.deleted}, #{entity.gmtCreate}, #{entity.gmtModified})
+        </foreach>
+        on duplicate key update
+         inventoryid = values(inventoryid) , branddept = values(branddept) , outtype = values(outtype) , bargaindate = values(bargaindate) , operationadminaccount = values(operationadminaccount) , acquisitiondate = values(acquisitiondate) , showroomprice = values(showroomprice) , sellminprice = values(sellminprice) , managerminprice = values(managerminprice) , bargainprice = values(bargainprice) , selltype = values(selltype) , isinfull = values(isinfull) , mortgagecycle = values(mortgagecycle) , downpaymentratio = values(downpaymentratio) , lendingrate = values(lendingrate) , lendingprice = values(lendingprice) , totalrepaymentprice = values(totalrepaymentprice) , monthrepayprice = values(monthrepayprice) , servicechargeratio = values(servicechargeratio) , servicechargeprice = values(servicechargeprice) , returnpointratio = values(returnpointratio) , returnpointprice = values(returnpointprice) , startdate = values(startdate) , enddate = values(enddate) , deposit = values(deposit) , balance = values(balance) , commission = values(commission) , otherexpenses = values(otherexpenses) , bargainuseraccount = values(bargainuseraccount) , userfrom = values(userfrom) , buyuserphone = values(buyuserphone) , buyuseridcard = values(buyuseridcard) , isinsurance = values(isinsurance) , outremarks = values(outremarks) , mustcollection = values(mustcollection) , hadcollection = values(hadcollection) , leftcollection = values(leftcollection) , nowcollection = values(nowcollection) , personinchargeaccount = values(personinchargeaccount) , collectiontext = values(collectiontext) , version = values(version) , deleted = values(deleted) , gmt_create = values(gmt_create) , gmt_modified = values(gmt_modified)     </insert>
+
+    <select id="getRealSellouts" resultType="com.back.entity.Sellout">
+        select * from hello.sellout
+    </select>
+
+    <delete id="realDeleteById" parameterType="Integer">
+        delete from hello.sellout where id=#{id}
+    </delete>
+    <select id="getPassSellouts" resultType="com.back.entity.Sellout">
+        select * from hello.sellout where deleted=1
+    </select>
+    <select id="getSellOutById" parameterType="Integer" resultType="com.back.entity.Sellout">
+        select * from hello.sellout where id=#{id}
+    </select>
+    <select id="getRealSelloutByInventoryid" parameterType="String" resultType="com.back.entity.Sellout">
+        select * from hello.sellout where inventoryid=#{inventoryid}
+    </select>
+
+</mapper>
+

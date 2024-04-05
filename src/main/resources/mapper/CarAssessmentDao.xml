@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.back.dao.CarAssessmentDao">
+
+    <resultMap type="com.back.entity.CarAssessment" id="CarAssessmentMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="inventoryid" column="inventoryid" jdbcType="VARCHAR"/>
+        <result property="cartype" column="cartype" jdbcType="VARCHAR"/>
+        <result property="assessmentstate" column="assessmentstate" jdbcType="VARCHAR"/>
+        <result property="branddept" column="branddept" jdbcType="VARCHAR"/>
+        <result property="vin" column="vin" jdbcType="VARCHAR"/>
+        <result property="motorid" column="motorid" jdbcType="VARCHAR"/>
+        <result property="oldcarnumber" column="oldcarnumber" jdbcType="VARCHAR"/>
+        <result property="gearbox" column="gearbox" jdbcType="VARCHAR"/>
+        <result property="carcolor" column="carcolor" jdbcType="VARCHAR"/>
+        <result property="exhaust" column="exhaust" jdbcType="VARCHAR"/>
+        <result property="mileage" column="mileage" jdbcType="VARCHAR"/>
+        <result property="createyear" column="createyear" jdbcType="TIMESTAMP"/>
+        <result property="firstnumber" column="firstnumber" jdbcType="TIMESTAMP"/>
+        <result property="isnumber" column="isnumber" jdbcType="INTEGER"/>
+        <result property="numberarea" column="numberarea" jdbcType="VARCHAR"/>
+        <result property="cararea" column="cararea" jdbcType="VARCHAR"/>
+        <result property="userprice" column="userprice" jdbcType="NUMERIC"/>
+        <result property="appraiserprice" column="appraiserprice" jdbcType="NUMERIC"/>
+        <result property="standprice" column="standprice" jdbcType="NUMERIC"/>
+        <result property="buyprice" column="buyprice" jdbcType="NUMERIC"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="grade" column="grade" jdbcType="VARCHAR"/>
+        <result property="cartext" column="cartext" jdbcType="VARCHAR"/>
+        <result property="maintenancetext" column="maintenancetext" jdbcType="VARCHAR"/>
+        <result property="carurl" column="carurl" jdbcType="VARCHAR"/>
+        <result property="createconfig" column="createconfig" jdbcType="VARCHAR"/>
+        <result property="carconfig" column="carconfig" jdbcType="VARCHAR"/>
+        <result property="adminaccount" column="adminaccount" jdbcType="VARCHAR"/>
+        <result property="appraiseraccount" column="appraiseraccount" jdbcType="VARCHAR"/>
+        <result property="version" column="version" jdbcType="INTEGER"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+        <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
+        <result property="gmtModified" column="gmt_modified" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into hello.car_assessment(inventoryid, cartype, assessmentstate, branddept, vin, motorid, oldcarnumber, gearbox, carcolor, exhaust, mileage, createyear, firstnumber, isnumber, numberarea, cararea, userprice, appraiserprice, standprice, buyprice, username, phone, grade, cartext, maintenancetext, carurl, createconfig, carconfig, adminaccount, appraiseraccount, version, deleted, gmt_create, gmt_modified)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.inventoryid}, #{entity.cartype}, #{entity.assessmentstate}, #{entity.branddept}, #{entity.vin}, #{entity.motorid}, #{entity.oldcarnumber}, #{entity.gearbox}, #{entity.carcolor}, #{entity.exhaust}, #{entity.mileage}, #{entity.createyear}, #{entity.firstnumber}, #{entity.isnumber}, #{entity.numberarea}, #{entity.cararea}, #{entity.userprice}, #{entity.appraiserprice}, #{entity.standprice}, #{entity.buyprice}, #{entity.username}, #{entity.phone}, #{entity.grade}, #{entity.cartext}, #{entity.maintenancetext}, #{entity.carurl}, #{entity.createconfig}, #{entity.carconfig}, #{entity.adminaccount}, #{entity.appraiseraccount}, #{entity.version}, #{entity.deleted}, #{entity.gmtCreate}, #{entity.gmtModified})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into hello.car_assessment(inventoryid, cartype, assessmentstate, branddept, vin, motorid, oldcarnumber, gearbox, carcolor, exhaust, mileage, createyear, firstnumber, isnumber, numberarea, cararea, userprice, appraiserprice, standprice, buyprice, username, phone, grade, cartext, maintenancetext, carurl, createconfig, carconfig, adminaccount, appraiseraccount, version, deleted, gmt_create, gmt_modified)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.inventoryid}, #{entity.cartype}, #{entity.assessmentstate}, #{entity.branddept}, #{entity.vin}, #{entity.motorid}, #{entity.oldcarnumber}, #{entity.gearbox}, #{entity.carcolor}, #{entity.exhaust}, #{entity.mileage}, #{entity.createyear}, #{entity.firstnumber}, #{entity.isnumber}, #{entity.numberarea}, #{entity.cararea}, #{entity.userprice}, #{entity.appraiserprice}, #{entity.standprice}, #{entity.buyprice}, #{entity.username}, #{entity.phone}, #{entity.grade}, #{entity.cartext}, #{entity.maintenancetext}, #{entity.carurl}, #{entity.createconfig}, #{entity.carconfig}, #{entity.adminaccount}, #{entity.appraiseraccount}, #{entity.version}, #{entity.deleted}, #{entity.gmtCreate}, #{entity.gmtModified})
+        </foreach>
+        on duplicate key update
+         inventoryid = values(inventoryid) , cartype = values(cartype) , assessmentstate = values(assessmentstate) , branddept = values(branddept) , vin = values(vin) , motorid = values(motorid) , oldcarnumber = values(oldcarnumber) , gearbox = values(gearbox) , carcolor = values(carcolor) , exhaust = values(exhaust) , mileage = values(mileage) , createyear = values(createyear) , firstnumber = values(firstnumber) , isnumber = values(isnumber) , numberarea = values(numberarea) , cararea = values(cararea) , userprice = values(userprice) , appraiserprice = values(appraiserprice) , standprice = values(standprice) , buyprice = values(buyprice) , username = values(username) , phone = values(phone) , grade = values(grade) , cartext = values(cartext) , maintenancetext = values(maintenancetext) , carurl = values(carurl) , createconfig = values(createconfig) , carconfig = values(carconfig) , adminaccount = values(adminaccount) , appraiseraccount = values(appraiseraccount) , version = values(version) , deleted = values(deleted) , gmt_create = values(gmt_create) , gmt_modified = values(gmt_modified)     </insert>
+
+    <select id="getRealCarAssessment" resultType="com.back.entity.CarAssessment">
+        select * from hello.car_assessment
+    </select>
+
+</mapper>
+

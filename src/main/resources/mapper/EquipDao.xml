@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.back.dao.EquipDao">
+
+    <resultMap type="com.back.entity.Equip" id="EquipMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="inventoryid" column="inventoryid" jdbcType="VARCHAR"/>
+        <result property="branddept" column="branddept" jdbcType="VARCHAR"/>
+        <result property="carstand" column="carstand" jdbcType="VARCHAR"/>
+        <result property="rows" column="rows" jdbcType="INTEGER"/>
+        <result property="costitems" column="costitems" jdbcType="VARCHAR"/>
+        <result property="amounts" column="amounts" jdbcType="NUMERIC"/>
+        <result property="remarks" column="remarks" jdbcType="VARCHAR"/>
+        <result property="startdates" column="startdates" jdbcType="TIMESTAMP"/>
+        <result property="enddates" column="enddates" jdbcType="TIMESTAMP"/>
+        <result property="types" column="types" jdbcType="VARCHAR"/>
+        <result property="version" column="version" jdbcType="INTEGER"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+        <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
+        <result property="gmtModified" column="gmt_modified" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into hello.equip(inventoryid, branddept, carstand, rows, costitems, amounts, remarks, startdates, enddates, types, version, deleted, gmt_create, gmt_modified)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.inventoryid}, #{entity.branddept}, #{entity.carstand}, #{entity.rows}, #{entity.costitems}, #{entity.amounts}, #{entity.remarks}, #{entity.startdates}, #{entity.enddates}, #{entity.types}, #{entity.version}, #{entity.deleted}, #{entity.gmtCreate}, #{entity.gmtModified})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into hello.equip(inventoryid, branddept, carstand, rows, costitems, amounts, remarks, startdates, enddates, types, version, deleted, gmt_create, gmt_modified)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.inventoryid}, #{entity.branddept}, #{entity.carstand}, #{entity.rows}, #{entity.costitems}, #{entity.amounts}, #{entity.remarks}, #{entity.startdates}, #{entity.enddates}, #{entity.types}, #{entity.version}, #{entity.deleted}, #{entity.gmtCreate}, #{entity.gmtModified})
+        </foreach>
+        on duplicate key update
+         inventoryid = values(inventoryid) , branddept = values(branddept) , carstand = values(carstand) , rows = values(rows) , costitems = values(costitems) , amounts = values(amounts) , remarks = values(remarks) , startdates = values(startdates) , enddates = values(enddates) , types = values(types) , version = values(version) , deleted = values(deleted) , gmt_create = values(gmt_create) , gmt_modified = values(gmt_modified)     </insert>
+
+    <select id="getTotalByInventoryid" parameterType="String" resultType="Double">
+        SELECT SUM(amounts) FROM hello.equip where inventoryid=#{inventoryid} and deleted=0
+    </select>
+
+    <select id="getTotal" resultType="Double">
+        SELECT SUM(amounts) FROM hello.equip where deleted=0
+    </select>
+
+</mapper>
+
