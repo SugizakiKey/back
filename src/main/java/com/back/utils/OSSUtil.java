@@ -18,6 +18,11 @@ import java.util.Date;
 @Slf4j
 public class OSSUtil{
 
+    private static OSSUtil ossUtil;
+
+    private OSSUtil() {
+    }
+
     // 阿里云API的内或外网域名
     private static final String endpoint="oss-cn-shanghai.aliyuncs.com";
 
@@ -38,8 +43,13 @@ public class OSSUtil{
     private static final long ONE_YEAR=a*b*c*d*e;
 
 
-
-    public static String uploadFile(String objectKey, MultipartFile multipartFile)
+    public static synchronized OSSUtil getOssUtil(){
+        if (ossUtil == null){
+            ossUtil = new OSSUtil();
+        }
+        return ossUtil;
+    }
+    public String uploadFile(String objectKey, MultipartFile multipartFile)
             throws OSSException, ClientException, FileNotFoundException {
 
         // 创建OSSClient的实例

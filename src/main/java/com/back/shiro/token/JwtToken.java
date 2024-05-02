@@ -82,7 +82,7 @@ public class JwtToken implements HostAuthenticationToken, RememberMeAuthenticati
         StringBuilder sb = new StringBuilder();
         sb.append(this.getClass().getName());
         sb.append(" - ");
-        sb.append(JwtUtil.parseJWT(this.token).getId());
+        sb.append(JwtUtil.getJwtUtil().parseJWT(this.token).getId());
         sb.append(", rememberMe=").append(this.rememberMe);
         if (this.host != null) {
             sb.append(" (").append(this.host).append(")");

@@ -20,16 +20,26 @@ import java.util.Map;
 
 /**
  * 封装HttpClient常用方法
- *
  */
 public class HttpClientUtil {
 
+    private static HttpClientUtil httpClientUtil;
     //设置连接超时时间，单位毫秒。
     public final static int CONNECT_TIMEOUT = 30000;
     //设置从connect Manager获取Connection 超时时间，单位毫秒。这个属性是新加的属性，因为目前版本是可以共享连接池的。
     public final static int CONNECT_REQUEST_TIMEOUT = 10000;
     //请求获取数据的超时时间，单位毫秒。 如果访问一个接口，多少时间内无法返回数据，就直接放弃此次调用。
     public final static int SOCKET_TIMEOUT = 30000;
+
+    private HttpClientUtil() {
+    }
+
+    public static synchronized HttpClientUtil getHttpClientUtil() {
+        if (httpClientUtil == null) {
+            httpClientUtil = new HttpClientUtil();
+        }
+        return httpClientUtil;
+    }
 
     /**
      * 不带参数的get 表单形式
@@ -38,9 +48,10 @@ public class HttpClientUtil {
      * @return
      * @throws Exception
      */
-    public static String doGet(String uri) throws Exception {
+    public String doGet(String uri) throws Exception {
         return doGet(uri, null);
     }
+
     /**
      * 1.带参数的get请求 body形式
      * 2.添加请求头header参数token
@@ -51,7 +62,7 @@ public class HttpClientUtil {
      * @return
      * @throws Exception
      */
-    public static String doGetAndHeader(String url, Map<String, Object> map, String tokenK, String tokenV) throws Exception {
+    public String doGetAndHeader(String url, Map<String, Object> map, String tokenK, String tokenV) throws Exception {
         // 1.创建URIBuilder
         URIBuilder uriBuilder = new URIBuilder(url);
 
@@ -99,6 +110,7 @@ public class HttpClientUtil {
 //        result.setBody(body);
         return body;
     }
+
     /**
      * 带参数的get请求 表单形式
      *
@@ -107,7 +119,7 @@ public class HttpClientUtil {
      * @return
      * @throws Exception
      */
-    public static String doGet(String url, Map<String, Object> map) throws Exception {
+    public String doGet(String url, Map<String, Object> map) throws Exception {
         // 1.创建URIBuilder
         URIBuilder uriBuilder = new URIBuilder(url);
 
@@ -144,7 +156,7 @@ public class HttpClientUtil {
      * @param url
      * @return
      */
-    public static HttpResult doPost(String url) throws Exception {
+    public HttpResult doPost(String url) throws Exception {
         return doPost(url, null);
     }
 
@@ -156,7 +168,7 @@ public class HttpClientUtil {
      * @return
      * @throws Exception
      */
-    public static HttpResult doPost(String url, Map<String, Object> map) throws Exception {
+    public HttpResult doPost(String url, Map<String, Object> map) throws Exception {
         // 1. 声明httppost
         HttpPost httpPost = new HttpPost(url);
 
@@ -204,7 +216,7 @@ public class HttpClientUtil {
      * @return
      * @throws Exception
      */
-    public static HttpResult doPostAndHeader(String url, Map<String, Object> map, String tokenK, String tokenV) throws Exception {
+    public HttpResult doPostAndHeader(String url, Map<String, Object> map, String tokenK, String tokenV) throws Exception {
         // 1. 声明httppost
         HttpPost httpPost = new HttpPost(url);
 
@@ -251,7 +263,7 @@ public class HttpClientUtil {
      * @param url
      * @return
      */
-    public static HttpResult doPut(String url) throws Exception {
+    public HttpResult doPut(String url) throws Exception {
         return doPut(url, null);
     }
 
@@ -263,7 +275,7 @@ public class HttpClientUtil {
      * @return
      * @throws Exception
      */
-    public static HttpResult doPut(String url, Map<String, Object> map) throws Exception {
+    public HttpResult doPut(String url, Map<String, Object> map) throws Exception {
         // 1. 声明httpput
         HttpPut httpPut = new HttpPut(url);
 
@@ -307,7 +319,7 @@ public class HttpClientUtil {
      * @return
      * @throws Exception
      */
-    public static HttpResult doDelete(String uri) throws Exception {
+    public HttpResult doDelete(String uri) throws Exception {
         return doDelete(uri, null);
     }
 
@@ -319,7 +331,7 @@ public class HttpClientUtil {
      * @return
      * @throws Exception
      */
-    public static HttpResult doDelete(String url, Map<String, Object> map) throws Exception {
+    public HttpResult doDelete(String url, Map<String, Object> map) throws Exception {
         // 1.创建URIBuilder
         URIBuilder uriBuilder = new URIBuilder(url);
 

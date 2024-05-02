@@ -49,7 +49,8 @@ public class BrandServiceImpl extends ServiceImpl<BrandDao, Brand> implements Br
 
         map.put("appkey",appkey);
         try {
-            String str = HttpClientUtil.doGet(url, map);
+            HttpClientUtil httpClientUtil = HttpClientUtil.getHttpClientUtil();
+            String str = httpClientUtil.doGet(url, map);
             List<Brand> brands = JSON.parseArray(JSON.parseObject(str).getString("result"), Brand.class);
             for (int i=0;i<brands.size();i++){
                 Brand brand = brands.get(i);

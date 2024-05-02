@@ -49,9 +49,9 @@ public class MyCredentialsMatcher extends SimpleCredentialsMatcher {
         String slat = adminDao.selectByAccount(account).getSalty();
         log.info("颜值："+slat);
         log.info("自定义密码验证器调用！！！");
-        log.info("md5加密:"+StringUtil.md5(inPassword + slat));
+        log.info("md5加密:"+StringUtil.getStringUtil().md5(inPassword + slat));
         //进行密码的比对
-        return this.equals(StringUtil.md5(inPassword + slat), dbPassword);
+        return this.equals(StringUtil.getStringUtil().md5(inPassword + slat), dbPassword);
     }
 
 }

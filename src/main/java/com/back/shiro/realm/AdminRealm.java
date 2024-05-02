@@ -50,7 +50,7 @@ public class AdminRealm extends AuthorizingRealm {
         log.info("执行了认证！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！");
         JwtToken jwtToken=(JwtToken) authenticationToken;
         String token=jwtToken.getToken();
-        Claims claims = JwtUtil.parseJWT(token);
+        Claims claims = JwtUtil.getJwtUtil().parseJWT(token);
         String account=claims.getId();
         Admin admin=adminDao.selectByAccount(account);
         log.info("realm里调用！！！");

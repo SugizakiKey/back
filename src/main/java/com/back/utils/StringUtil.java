@@ -10,18 +10,31 @@ import java.util.UUID;
  * @author 何进业
  */
 public class StringUtil {
+
+    private static StringUtil stringUtil;
+
+    private StringUtil() {
+    }
+
+    public static synchronized StringUtil getStringUtil() {
+        if (stringUtil == null) {
+            stringUtil = new StringUtil();
+        }
+        return stringUtil;
+    }
+
     /**
      * 生成随机字符串
      */
-    public static String generateUUID(){
-        return UUID.randomUUID().toString().replaceAll("-","");
+    public String generateUUID() {
+        return UUID.randomUUID().toString().replaceAll("-", "");
     }
 
     /**
      * MD5加密
      */
-    public static String md5(String key){
-        if (StringUtils.isBlank(key)){
+    public String md5(String key) {
+        if (StringUtils.isBlank(key)) {
             return null;
         }
         return DigestUtils.md5DigestAsHex(key.getBytes());
@@ -29,16 +42,15 @@ public class StringUtil {
 
     //生成盐值
 
-    public static String salty(){
+    public String salty() {
         return String.valueOf((int) ((Math.random() * 9 + 1) * 100000));
     }
 
 
-
-    public static Integer changeString(String string){
+    public Integer changeString(String string) {
         if (string != null && !StringUtils.isBlank(string)) {
             return Integer.valueOf(string);
-        }else {
+        } else {
             return null;
         }
     }

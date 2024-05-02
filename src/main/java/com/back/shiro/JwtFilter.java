@@ -36,8 +36,8 @@ public class JwtFilter extends AuthenticatingFilter {
             log.info(jwt);
             log.info("验证了jwt");
             // 校验jwt
-            Claims claim = JwtUtil.parseJWT(jwt);
-            if(claim == null || JwtUtil.isTokenExpired(claim.getExpiration())) {
+            Claims claim = JwtUtil.getJwtUtil().parseJWT(jwt);
+            if(claim == null || JwtUtil.getJwtUtil().isTokenExpired(claim.getExpiration())) {
                 log.info("jwt过滤器身份过期");
                 HttpServletResponse response = (HttpServletResponse)servletResponse;
                 response.setContentType("application/plain;charset=utf-8");

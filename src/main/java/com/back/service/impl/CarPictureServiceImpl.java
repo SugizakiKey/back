@@ -49,7 +49,7 @@ public class CarPictureServiceImpl extends ServiceImpl<CarPictureDao, CarPicture
                 String id= UUID.randomUUID().toString().replace("-","");
                 String objectKey="hello/"+inventoryid+"/"+id+"."+(files[i].getContentType().substring(files[i].getContentType().lastIndexOf('/')+1));
                 try {
-                    String url = OSSUtil.uploadFile(objectKey, files[i]);
+                    String url = OSSUtil.getOssUtil().uploadFile(objectKey, files[i]);
                     carPicture.setUrl(url);
 
                     if (i==0 &&firsturl==null){

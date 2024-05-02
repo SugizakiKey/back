@@ -49,7 +49,7 @@ public class CertificatePictureServiceImpl extends ServiceImpl<CertificatePictur
 
                             String objectKey="hello/"+inventoryid+"/"+names[i]+"/"+"1."+(files[count].getContentType().substring(files[count].getContentType().lastIndexOf('/')+1));
                             try {
-                                String url = OSSUtil.uploadFile(objectKey, files[count]);
+                                String url = OSSUtil.getOssUtil().uploadFile(objectKey, files[count]);
                                 list.get(i).setUrl(url);
                             } catch (ClientException e) {
                                 e.printStackTrace();
@@ -68,7 +68,7 @@ public class CertificatePictureServiceImpl extends ServiceImpl<CertificatePictur
                         certificatePicture.setName(names[i]);
                         String objectKey="hello/"+inventoryid+"/"+names[i]+"/"+"1."+(files[count].getContentType().substring(files[count].getContentType().lastIndexOf('/')+1));
                         try {
-                            String url = OSSUtil.uploadFile(objectKey, files[count]);
+                            String url = OSSUtil.getOssUtil().uploadFile(objectKey, files[count]);
                             certificatePicture.setUrl(url);
                         } catch (ClientException e) {
                             e.printStackTrace();

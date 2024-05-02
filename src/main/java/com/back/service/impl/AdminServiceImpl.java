@@ -61,7 +61,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminDao, Admin> implements Ad
             return map;
         }
         Subject subject = SecurityUtils.getSubject();
-        String token = JwtUtil.createJWT(admin.getAccount(), "hziee", "songjie", 1000 *60 * 60 * 24);
+        String token = JwtUtil.getJwtUtil().createJWT(admin.getAccount(), "hziee", "songjie", 1000 *60 * 60 * 24);
         JwtToken jwtToken = new JwtToken(token, admin.getPassword());
         try {
             subject.login(jwtToken);
@@ -103,9 +103,9 @@ public class AdminServiceImpl extends ServiceImpl<AdminDao, Admin> implements Ad
         Integer count = adminDao.selectCount(wrapper);
         log.info(""+count);*/
         if (admin1==null){
-            String salty= StringUtil.salty();
+            String salty= StringUtil.getStringUtil().salty();
             admin.setSalty(salty);
-            admin.setPassword(StringUtil.md5(admin.getPassword()+salty));
+            admin.setPassword(StringUtil.getStringUtil().md5(admin.getPassword()+salty));
             //添加
             adminDao.insert(admin);
             map.put("code",201);
@@ -124,7 +124,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminDao, Admin> implements Ad
     public Map updatePassword(Admin admin) {
         Map map=new HashMap();
         Admin admin1 = adminDao.selectByAccount(admin.getAccount());
-        admin1.setPassword(StringUtil.md5(admin.getPassword()+admin1.getSalty()));
+        admin1.setPassword(StringUtil.getStringUtil().md5(admin.getPassword()+admin1.getSalty()));
         adminDao.updateById(admin1);
         map.put("code",202);
         map.put("message","修改密码成功！！！");
@@ -147,7 +147,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminDao, Admin> implements Ad
             //阿里云里的名字
             String objectKey="hello/"+admin.getId()+"/"+"1."+(imgFile.getContentType().substring(imgFile.getContentType().lastIndexOf('/')+1));
             try {
-                String url = OSSUtil.uploadFile(objectKey, imgFile);
+                String url = OSSUtil.getOssUtil().uploadFile(objectKey, imgFile);
                 admin.setCircleurl(url);
             } catch (ClientException e) {
                 e.printStackTrace();
@@ -185,9 +185,9 @@ public class AdminServiceImpl extends ServiceImpl<AdminDao, Admin> implements Ad
         Map map=new HashMap();
         Admin admin1=adminDao.selectByAccount1(admin.getAccount());
         if (admin1==null){
-            String salty= StringUtil.salty();
+            String salty= StringUtil.getStringUtil().salty();
             admin.setSalty(salty);
-            admin.setPassword(StringUtil.md5(admin.getPassword()+salty));
+            admin.setPassword(StringUtil.getStringUtil().md5(admin.getPassword()+salty));
             adminDao.insert(admin);
 
             AdminRoles adminRoles = new AdminRoles();
@@ -208,7 +208,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminDao, Admin> implements Ad
     public void resetPassword(Integer id) {
         Admin admin = adminDao.selectById(id);
         String salty = admin.getSalty();
-        admin.setPassword(StringUtil.md5("123456"+salty));
+        admin.setPassword(StringUtil.getStringUtil().md5("123456"+salty));
         adminDao.updateById(admin);
     }
 

@@ -16,6 +16,19 @@ import java.util.Date;
  */
 public class JwtUtil {
 
+    private static JwtUtil jwtUtil;
+
+    private JwtUtil() {
+    }
+
+
+    public static synchronized JwtUtil getJwtUtil() {
+        if (jwtUtil == null) {
+            jwtUtil = new JwtUtil();
+        }
+        return jwtUtil;
+    }
+
     /**
      * 加密
      *
@@ -25,7 +38,7 @@ public class JwtUtil {
      * @param ttlMillis
      * @return
      */
-    public static String createJWT(String username, String issuer, String subject, long ttlMillis) {
+    public String createJWT(String username, String issuer, String subject, long ttlMillis) {
 
         //The JWT signature algorithm we will be using to sign the token
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
@@ -60,7 +73,7 @@ public class JwtUtil {
      *
      * @param jwt
      */
-    public static Claims parseJWT(String jwt) {
+    public Claims parseJWT(String jwt) {
         //This line will throw an exception if
         // it is not a signed JWS (as expected)
         try {
@@ -71,7 +84,7 @@ public class JwtUtil {
                     .parseClaimsJws(jwt)
                     .getBody();
             return claims;
-        }catch (ExpiredJwtException e){
+        } catch (ExpiredJwtException e) {
             return null;
         }
 //        System.out.println("ID: " + claims.getId());
@@ -81,7 +94,7 @@ public class JwtUtil {
 
     }
 
-    public static boolean isTokenExpired(Date expiration) {
+    public boolean isTokenExpired(Date expiration) {
         return expiration.before(new Date());
     }
 
